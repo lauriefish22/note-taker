@@ -8,27 +8,32 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+
+
+app.get('/', function (req, res) {
+    res.sendFile(path.join(_dirname, "/public/index.html"))
+});
 app.get('/notes', (req, res) => {
     res.sendFile(path.join(_dirname, 'public/notes.html'))
-})
+});
+
+
 
 
 app.post('/api/notes', (req, res) => {
-    //from line 36 on index.
 
-    //*need to have fs readfile, parse it out then push the new note.  use req.body for this. */
-    //fs.writeFile
-    //send back a response.  
+    const { title, text } = req.body;
 
-}
+    if (title && text) {
 
+        let newNote = req.body;
 
-//res.json(noteStorage) read from db.json using fs readfile, parse and send
+        console.log(newNote);
+        fs.writeFile('db/db.json', JSON.stringify(parsedNotes, null, 4), (Err) =>
+            Err ? console.error(Err) : res.send(newNote)
+        )
 
-
-app.listen
-
-
+    };
 
 
 
@@ -36,6 +41,10 @@ app.listen
 
 
 
-app.delete('/api/notes', (req, res) => {
 
-}
+
+
+
+
+
+
