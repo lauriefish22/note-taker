@@ -11,14 +11,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 
-
+// Routing to the HTML page
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, "/public/index.html"))
 });
+// Routing to the notes page
 app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/notes.html'))
 });
-
+// Grabbing the data and parsing it
 app.get('/api/notes', (req, res) => {
     fs.readFile('./db/db.json', 'utf8', (err, data) => {
         if (err) {
@@ -31,7 +32,7 @@ app.get('/api/notes', (req, res) => {
     }
     );
 });
-
+// adding new input to an array of existing notes
 app.post('/api/notes', (req, res) => {
 
     const { title, text } = req.body;
@@ -61,6 +62,7 @@ app.post('/api/notes', (req, res) => {
     );
 
 })
+// added ability to delete notes
 app.delete('/api/notes/:id', (req, res) => {
     let id = req.params.id
     fs.readFile('./db/db.json', 'utf8', (err, data) => {
