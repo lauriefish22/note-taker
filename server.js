@@ -61,12 +61,11 @@ app.post('/api/notes', (req, res) => {
     );
 
 })
-app.delete('api/notes/:id', (req, res) => {
-    // let deleteNote = req.params.id
+app.delete('/api/notes/:id', (req, res) => {
+    let id = req.params.id
     fs.readFile('./db/db.json', 'utf8', (err, data) => {
         if (err) {
             console.error(err);
-
         } else {
             let notes = JSON.parse(data);
             let thisNote = notes.filter((note) => note.id !== id);
@@ -76,11 +75,11 @@ app.delete('api/notes/:id', (req, res) => {
                 Err ? console.error(Err) :
 
                     res.send({ msg: 'deleted' });
-            })
+            });
         }
-    })
-})
-    ;
+    });
+});
+;
 
 app.listen(PORT, () => {
     console.log(`App listening at http://localhost:${PORT}`);
